@@ -22,7 +22,7 @@
 
 ## Документация
 
-1. [План автоматизации тестирования]()
-2. [Чек-лист]()
+1. [План автоматизации тестирования](https://github.com/NomadGaall/QAMID_Diplom_Mobile_App_Hospis/blob/main/Plan.md)
+2. [Чек-лист](https://github.com/NomadGaall/QAMID_Diplom_Mobile_App_Hospis/blob/main/Checks.xlsx)
 
-3. [Тест-кейсы]()
+3. [Тест-кейсы](https://github.com/NomadGaall/QAMID_Diplom_Mobile_App_Hospis/blob/main/Cases.xlsx)
