@@ -19,7 +19,25 @@
 - В поле "Пароль" ввести: password2
 
 ---
+## Инструкция по запуску
+1. Перейти в файл в для проверки тестирования:
 
+```fmh_android_15_03_24/app/src/androidTest/java/ru/iteco/fmhandroid/ui```
+
+
+2. В терминале выполнить команду:
+
+```$ adb shell am instrument -w -m    -e debug false -e class 'ru.iteco.fmhandroid.ui.tests.AuthorizationTest' ru.iteco.fmhandroid.test/androidx.test.runner.AndroidJUnitRunner```
+
+```$ adb shell am instrument -w -m    -e debug false -e class 'ru.iteco.fmhandroid.ui.tests.AboutTest' ru.iteco.fmhandroid.test/androidx.test.runner.AndroidJUnitRunner```
+
+```$ adb shell am instrument -w -m    -e debug false -e class 'ru.iteco.fmhandroid.ui.tests.MainTest' ru.iteco.fmhandroid.test/androidx.test.runner.AndroidJUnitRunner```
+
+```$ adb shell am instrument -w -m    -e debug false -e class 'ru.iteco.fmhandroid.ui.tests.NewsControlPanelTest' ru.iteco.fmhandroid.test/androidx.test.runner.AndroidJUnitRunner```
+
+```$ adb shell am instrument -w -m    -e debug false -e class 'ru.iteco.fmhandroid.ui.tests.NewsTest' ru.iteco.fmhandroid.test/androidx.test.runner.AndroidJUnitRunner```
+
+```$ adb shell am instrument -w -m    -e debug false -e class 'ru.iteco.fmhandroid.ui.tests.ThematicQuoteTest' ru.iteco.fmhandroid.test/androidx.test.runner.AndroidJUnitRunner```
 ## Документация
 
 1. [План автоматизации тестирования]()
