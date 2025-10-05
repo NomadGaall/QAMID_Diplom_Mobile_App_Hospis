@@ -7,6 +7,7 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
@@ -54,6 +55,10 @@ import static ru.iteco.fmhandroid.ui.elements.NewsControlPanelPage.titleNeedHelp
 import static ru.iteco.fmhandroid.ui.elements.NewsControlPanelPage.titleSalary;
 import static ru.iteco.fmhandroid.ui.elements.NewsControlPanelPage.titleSalaryEnumerated;
 import static ru.iteco.fmhandroid.ui.elements.NewsControlPanelPage.titleUnion;
+
+import android.view.View;
+
+import org.hamcrest.Matchers;
 
 import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
@@ -106,7 +111,7 @@ public class NewsControlPanelSteps {
 
     public void thedisplayordechangesfromtheearliest() {
         Allure.step("Порядок отображения новости от самой ранней");
-        onView(withIndex(withId(R.id.news_item_publication_date_text_view), 0)).check(matches(withText("19.05.2025")));
+        onView(withIndex(withId(R.id.news_item_publication_date_text_view), 0)).check(matches(withText("10.10.2025")));
     }
     public void thedisplayordechangesfromthlateste() {
         Allure.step("Порядок отображения новости от самой поздней");
@@ -178,7 +183,8 @@ public class NewsControlPanelSteps {
     public void clickButtonSaveCreatingNews() {
         Allure.step("Нажать на кнопку Сохранить новость");
         newsControlPanelPage.getNewsControlPanelElementsButtonSaveCreatingNews
-                .perform(scrollTo(), click());
+                .perform(click());
+//                .perform(scrollTo(), click());
     }
 
 
@@ -187,12 +193,19 @@ public class NewsControlPanelSteps {
         newsControlPanelPage.getNewsControlPanelElementsCategoryText.perform(click(), clearText(), replaceText(text), closeSoftKeyboard());
     }
 
-    static String nextYear = "15.04.2026";
+    static String nextYear = "13.03.2026";
 
     public void clickButtonDateCreatingNextDate() {
         Allure.step("В поле Дата публикации выбрать дату будущего года");
         newsControlPanelPage.getNewsControlPanelElementsButtonDateCreatingNews
                 .perform(replaceText(nextYear));
+    }
+
+    static String nextDate = "10.10.2025";
+    public void ButtonDateCreatingNextDate() {
+        Allure.step("В поле Дата публикации выбрать будущая дата");
+        newsControlPanelPage.getNewsControlPanelElementsButtonDateCreatingNews
+                .perform(replaceText(nextDate));
     }
 
 
@@ -247,13 +260,62 @@ public class NewsControlPanelSteps {
 
 
     public void shouldOpenCreateNews() {
-        Allure.step("Переход в Contro; panelй).");
+        Allure.step("Переход в Contro; panel).");
         onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
         mainSteps.clickButtonMainMenu();
         newsSteps.clickButtonNews();
         onView(allOf(withText("News"),
                 withParent(withParent(withId(R.id.container_list_news_include))))).check(matches(isDisplayed()));
     }
+    public void availabilityForTextAdvanceIsListed() {
+        Allure.step("Порядок отображения новости от самой поздней");
+        onView(withIndex(withId(R.id.news_item_description_text_view), 0)).check(matches(withText("Перечислен аванс")));
+    }
+    public void availabilityForTextAanniversary() {
+        Allure.step("Порядок отображения новости от самой поздней");
+        onView(withIndex(withId(R.id.news_item_description_text_view), 0)).check(matches(withText("Юбилей")));
+    }
+    public void availabilityForTextANotActive() {
+        Allure.step("Ожидание блока с текстом \"Not active\"");
+        onView(withId(R.id.switcher))
+                .check(matches(withText("Not active")))
+                .check(matches(isDisplayed()));
+    }
+    public void waitingNewsWithStatuseNotActive () {
+        Allure.step("Порядок отображения новости от самой поздней");
+        onView(withIndex(withId(R.id.news_item_published_text_view), 0)).check(matches(withText("NOT ACTIVE")));
+    }
+
+    /**
+     * Ожидание и проверка сообщения "Fill empty fields"
+     @param decorView Декоративный View активности
+     */
+    public void waitingErrorsWithEmptyFields(View decorView) {
+        onView(withText("Fill empty fields"))
+                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
+                .check(matches(isDisplayed()));
+    }
+    /**
+     * Ожидание и проверка сообщения "Fill empty fields"
+     @param decorView Декоративный View активности
+     */
+    public void waitingErrorsSavingFaileds(View decorView) {
+        onView(withText("Saving failed. Try again later."))
+                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
+                .check(matches(isDisplayed()));
+    }
+    public void createNewsForTest () {
+        Allure.step("Создание новости");
+        clickAddNews();
+        fillInNewsCategoryField(getCategoryAdvertisement());
+        fillTitleCreatingNews(getTitleAdvertisement());
+        ButtonDateCreatingNextDate();
+        clickButtonTimeCreatingNews();
+        clickButtonOkTimeCreatingNews();
+        fillDescriptionCreatingNews(getDescriptionSalary());
+        clickButtonSaveCreatingNews();
+    }
+
 
 
     public static String getCategoryAdvertisement() {

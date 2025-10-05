@@ -67,11 +67,10 @@ public class NewsTest {
     @Story("NC - 1")
     @Description(" Переход во вкладку Все новости (ALL NEWS) через главное меню мобильного приложения Мобильный хоспис (Позитивный).")
     public void transferToAllNewsThroughMainMenu() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         newsSteps.clickButtonNews();
-        onView(allOf(withText("News"),
-                withParent(withParent(withId(R.id.container_list_news_include))))).check(matches(isDisplayed()));
+        newsSteps.waitingTextNewsInBlock();
         newsSteps.buttonSortingControlPanel();
         newsSteps.buttonSortingControlPanel();
     }
@@ -80,11 +79,10 @@ public class NewsTest {
     @Story("NC - 2")
     @Description(" Сортировка новостей по несуществующей дате во вкладку Все новости (ALL NEWS) через главное меню мобильного приложения Мобильный хоспис (Позитивный).")
     public void FilterToAllNewsThroughMainMenu() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         newsSteps.clickButtonNews();
-        onView(allOf(withText("News"),
-                withParent(withParent(withId(R.id.container_list_news_include))))).check(matches(isDisplayed()));
+        newsSteps.waitingTextNewsInBlock();
         newsSteps.buttonFilterControlPanel();
         newsSteps.startDateFilter();
         newsSteps.endDateFilter();
@@ -98,11 +96,10 @@ public class NewsTest {
     @Story("NC - 3")
     @Description(" Сортировка новостей с отменой фильтрации во вкладку Все новости (ALL NEWS) через главное меню мобильного приложения Мобильный хоспис (Позитивный).")
     public void FilterWithCanselToAllNewsThroughMainMenu() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         newsSteps.clickButtonNews();
-        onView(allOf(withText("News"),
-                withParent(withParent(withId(R.id.container_list_news_include))))).check(matches(isDisplayed()));
+        newsSteps.waitingTextNewsInBlock();
         newsSteps.buttonFilterControlPanel();
         newsSteps.startDateFilter();
         newsSteps.canselfilterbutton();

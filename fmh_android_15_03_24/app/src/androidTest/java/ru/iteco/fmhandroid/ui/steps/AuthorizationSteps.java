@@ -4,8 +4,10 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static ru.iteco.fmhandroid.ui.data.DataHelper.waitDisplayed;
 import static ru.iteco.fmhandroid.ui.elements.AuthorizationPage.differentRegexLogin;
 import static ru.iteco.fmhandroid.ui.elements.AuthorizationPage.differentRegexPassword;
@@ -22,18 +24,36 @@ import static ru.iteco.fmhandroid.ui.elements.AuthorizationPage.rightPassword;
 import static ru.iteco.fmhandroid.ui.elements.AuthorizationPage.unregisteredLogin;
 import static ru.iteco.fmhandroid.ui.elements.AuthorizationPage.unregisteredPassword;
 
+
+
+
+
+import android.view.View;
+
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.rule.ActivityTestRule;
+
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+
+import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.elements.AuthorizationPage;
+
 import io.qameta.allure.kotlin.Allure;
+import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.elements.AuthorizationPage;
 
 public class AuthorizationSteps {
 
     AuthorizationPage authorizationPage = new AuthorizationPage();
 
+    public ActivityTestRule<AppActivity> activityRule =
+            new ActivityTestRule<>(AppActivity.class);
+
     public void loadAuthorizationPage() {
         Allure.step("Загрузка страницы авторизации");
         onView(isRoot()).perform(waitDisplayed((authorizationPage.enterButton), 5000));
     }
-
     public void clickButtonSignIn() {
         Allure.step("Нажать на кнопку Войти");
         authorizationPage.getAuthorizationElementsButton
@@ -67,6 +87,34 @@ public class AuthorizationSteps {
         Allure.step("Поле Пароль - ввод данных" + text);
         authorizationPage.getAuthorizationElementsPasswordField.perform(replaceText(text));
     }
+
+    public void waitingAuthorizationPageAndLoginLayout() {
+        onView(isRoot()).perform(waitDisplayed(getLoginLayout(), 5000));
+    }
+    public void waitForAuthorizationButton() {
+        onView(isRoot()).perform(waitDisplayed(R.id.authorization_image_button, 3000));
+    }
+    // ... существующий код ...
+
+    /**
+     * Ожидание и проверка сообщения "Something went wrong. Try again later."
+     * @param decorView Декоративный View активности
+     */
+    public void waitForSomethingWentWrong(View decorView) {
+        onView(withText("Something went wrong. Try again later."))
+                .inRoot(withDecorView(Matchers.not(decorView)))
+                .check(matches(isDisplayed()));
+    }
+    /**
+     * Ожидание и проверка сообщения "Login and password cannot be empty"
+      @param decorView Декоративный View активности
+     */
+    public void waitForEmptyLoginOrPasswordError(View decorView) {
+        onView(withText("Login and password cannot be empty"))
+                .inRoot(withDecorView(Matchers.not(decorView)))
+                .check(matches(isDisplayed()));
+    }
+
 
     public static String getLogin() {
         return rightLogin;

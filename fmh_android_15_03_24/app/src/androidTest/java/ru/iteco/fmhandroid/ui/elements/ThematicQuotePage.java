@@ -24,6 +24,8 @@ public class ThematicQuotePage {
     public ViewInteraction title;
     public ViewInteraction ourMissionList;
     public ViewInteraction missionConstraintLayout;
+    public ViewInteraction itemDescriptionTextView;
+    public ViewInteraction getItemDescriptionTextView;
 
 
     public ThematicQuotePage() {
@@ -37,6 +39,6 @@ public class ThematicQuotePage {
         ourMissionList = onView(withId(R.id.our_mission_item_list_recycler_view));
         missionConstraintLayout = onView(allOf(withId(R.id.our_mission_item_list_recycler_view),
                 childAtPosition(withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")), 0)));
-
+        getItemDescriptionTextView = onView(withIndex(withId(R.id.our_mission_item_description_text_view), 0));
     }
 }

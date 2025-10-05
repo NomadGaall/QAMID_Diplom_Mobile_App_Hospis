@@ -19,6 +19,7 @@ public class AuthorizationPage {
     public ViewInteraction getAuthorizationElementsButtonExit;
     public ViewInteraction getAuthorizationElementsButtonLogOut;
     public ViewInteraction getAuthorizationElementsTextAuthorization;
+    public ViewInteraction AuthorizationElementsButtonExit;
     public int loginField;
     public static String rightLogin;
     public static String rightPassword;
@@ -44,6 +45,7 @@ public class AuthorizationPage {
         getAuthorizationElementsLoginField = onView(allOf(withHint("Login"), withParent(withParent(withId(R.id.login_text_input_layout)))));
         getAuthorizationElementsPasswordField = onView(allOf(withHint("Password"), withParent(withParent(withId(R.id.password_text_input_layout)))));
         getAuthorizationElementsButtonExit = onView(withId(R.id.authorization_image_button));
+        AuthorizationElementsButtonExit = onView(withId(R.id.authorization_image_button));
         getAuthorizationElementsButtonLogOut = onView(allOf(withId(android.R.id.title), withText("Log out")));
         getAuthorizationElementsTextAuthorization = onView(allOf(withText("Authorization"), withParent(withParent(withId(R.id.nav_host_fragment)))));
         loginField = R.id.login_text_input_layout;

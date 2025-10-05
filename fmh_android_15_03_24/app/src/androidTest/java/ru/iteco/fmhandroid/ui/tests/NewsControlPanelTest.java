@@ -97,6 +97,7 @@ public class NewsControlPanelTest {
     public void sortingNewsOmControlPanel() {
         newsControlPanelSteps.shouldOpenCreateNews();
         newsControlPanelSteps.clickButtonControlPanel();
+        newsControlPanelSteps.createNewsForTest();
         newsControlPanelSteps.clickButtonSortingNews();
         newsControlPanelSteps.thedisplayordechangesfromtheearliest();
         newsControlPanelSteps.clickButtonSortingNews();
@@ -171,8 +172,9 @@ public class NewsControlPanelTest {
         newsControlPanelSteps.clickButtonOkTimeCreatingNews();
         newsControlPanelSteps.fillDescriptionCreatingNews(getDescriptionSalary());
         newsControlPanelSteps.clickButtonSaveCreatingNews();
+        newsControlPanelSteps.clickButtonSortingNews();
         newsControlPanelSteps.clickButtonToExpandNews();
-        onView(withIndex(withId(R.id.news_item_description_text_view), 0)).check(matches(withText("Перечислен аванс")));
+        newsControlPanelSteps.availabilityForTextAdvanceIsListed();
         newsControlPanelSteps.clickButtonToDeleteNews();
         newsControlPanelSteps.clickButtonToOkDeleteNews();
 
@@ -193,9 +195,7 @@ public class NewsControlPanelTest {
         newsControlPanelSteps.clickButtonOkTimeCreatingNews();
         newsControlPanelSteps.fillDescriptionCreatingNews(getSpecialCharactersCategoryDescription());
         newsControlPanelSteps.clickButtonSaveCreatingNews();
-        onView(withText("Saving failed. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        newsControlPanelSteps.waitingErrorsSavingFaileds(decorView);
         pressBack();
     }
 
@@ -208,9 +208,7 @@ public class NewsControlPanelTest {
         newsControlPanelSteps.clickButtonControlPanel();
         newsControlPanelSteps.clickAddNews();
         newsControlPanelSteps.clickButtonSaveCreatingNews();
-        onView(withText("Fill empty fields"))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        newsControlPanelSteps.waitingErrorsWithEmptyFields(decorView);
         pressBack();
 
     }
@@ -224,11 +222,9 @@ public class NewsControlPanelTest {
         newsControlPanelSteps.clickButtonControlPanel();
         newsControlPanelSteps.clickButtonToEditNews();
         newsControlPanelSteps.clickButtonToSwitchStatusNews();
-        onView(withId(R.id.switcher))
-                .check(matches(withText("Not active")))
-                .check(matches(isDisplayed()));
+        newsControlPanelSteps.availabilityForTextANotActive();
         newsControlPanelSteps.clickButtonSaveCreatingNews();
-        onView(withIndex(withId(R.id.news_item_published_text_view), 0)).check(matches(withText("NOT ACTIVE")));
+        newsControlPanelSteps.waitingNewsWithStatuseNotActive();
         newsControlPanelSteps.clickButtonToDeleteNews();
         newsControlPanelSteps.clickButtonToOkDeleteNews();
     }
@@ -247,7 +243,7 @@ public class NewsControlPanelTest {
         newsControlPanelSteps.fillDescriptionCreatingNews(getDescriptionBirthdayEdit());
         newsControlPanelSteps.clickButtonSaveCreatingNews();
         newsControlPanelSteps.clickButtonToExpandNews();
-        onView(withIndex(withId(R.id.news_item_description_text_view), 0)).check(matches(withText("Юбилей")));
+        newsControlPanelSteps.availabilityForTextAanniversary();
         pressBack();
     }
 

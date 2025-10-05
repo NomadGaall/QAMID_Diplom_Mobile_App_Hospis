@@ -5,11 +5,14 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static ru.iteco.fmhandroid.ui.data.DataHelper.waitDisplayed;
 
 
 
 import io.qameta.allure.kotlin.Allure;
+import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.elements.AuthorizationPage;
 import ru.iteco.fmhandroid.ui.elements.MainPage;
 
@@ -24,7 +27,7 @@ public class MainSteps {
 
     public void checkThatMainBlockContentIsFull() {
         Allure.step("Проверка, что в блоке \"Главная\" полный контент");
-        authorizationPage. getAuthorizationElementsButtonExit.check(matches(isDisplayed()));
+        authorizationPage.getAuthorizationElementsButtonExit.check(matches(isDisplayed()));
         mainPage.getMainElementsButtonMainMenu.check(matches(isDisplayed()));
         mainPage.getMainElementsOurMissionButton.check(matches(isDisplayed()));
         mainPage.getMainElementsTitleNews.check(matches(isDisplayed()));
@@ -32,6 +35,11 @@ public class MainSteps {
     }
 
 
+    public void waitingForMaiMenbToLoad() {
+        Allure.step("Ожидание загрузки  главный экран и появится меню");
+        // Ждем пока загрузится главный экран и появится меню
+        onView(isRoot()).perform(waitDisplayed(getMainMenuButton(), 5000));
+    }
     public void clickButtonMainMenu() {
         Allure.step("Нажать на кнопку Главного меню");
         mainPage.getMainElementsButtonMainMenu
@@ -56,6 +64,18 @@ public class MainSteps {
         mainPage.getMainElementsTitleNews
                 .check(matches(isDisplayed()));
     }
+    public void waitingTextNews() {
+        Allure.step("Ожидание текста \"News\"");
+        onView(withText("News")).check(matches(isDisplayed()));
+    }
+    public void DisplayingAllNews() {
+        Allure.step("Отображение \"ALL NEWS\" ");
+        mainPage.getMainElementsButtonAllNews.check(matches(withText("ALL NEWS")));
+    }
+    public void DisplayingGetButtonToExpandNews() {
+        onView(isRoot()).perform(waitDisplayed(getButtonToExpandNews(), 5000));
+    }
+
 
     public int getMainMenuButton() {
         return mainPage.mainMenuButton;

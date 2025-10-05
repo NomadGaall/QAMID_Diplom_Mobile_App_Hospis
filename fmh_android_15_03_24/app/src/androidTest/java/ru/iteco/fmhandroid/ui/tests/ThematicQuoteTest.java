@@ -60,7 +60,7 @@ public class ThematicQuoteTest {
     @Story("TC - 1")
     @Description("Проверка корректности отображения элементов экрана, во вкладке \"Love is all\", мобильного приложения \"Мобильный хоспис\" (Позитивный).")
     public void shouldBeFullContentInQuotesBlock() {
-        onView(isRoot()).perform(waitDisplayed(thematicQuoteSteps.getMissionImageButton(), 5000));
+        thematicQuoteSteps.waitingMissionImageButtonAndThemePage ();
         thematicQuoteSteps.clickButtonThematicQuote();
         thematicQuoteSteps.checkThatQuotesBlockContentIsFull();
     }
@@ -70,11 +70,11 @@ public class ThematicQuoteTest {
     @Story("TC - 2")
     @Description("Развернуть/свернуть тематическую цитату, во вкладке \"Love is all\", мобильного приложения \"Мобильный хоспис\" (Позитивный).")
     public void expandThematicQuote() {
-        onView(isRoot()).perform(waitDisplayed(thematicQuoteSteps.getMissionImageButton(), 5000));
+        thematicQuoteSteps.waitingMissionImageButtonAndThemePage ();
         thematicQuoteSteps.clickButtonThematicQuote();
         thematicQuoteSteps.checkTitleThematicQuote();
         thematicQuoteSteps.clickButtonToExpandThematicQuote();
-        onView(withIndex(withId(R.id.our_mission_item_description_text_view), 0)).check(matches(isDisplayed()));
+        thematicQuoteSteps.verifyItemDescriptionDisplayed(0);
     }
 }
 

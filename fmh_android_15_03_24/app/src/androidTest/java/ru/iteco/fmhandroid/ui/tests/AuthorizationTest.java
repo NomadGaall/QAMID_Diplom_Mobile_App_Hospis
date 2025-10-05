@@ -83,12 +83,12 @@ public class AuthorizationTest {
     @Story("AC - 1,2,3")
     @Description("Авторизация в мобильном приложении \"Мобильный хоспис\" (Позитивный).")
     public void Authorizationsuccessful() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getLogin());
         authorizationSteps.fillPasswordField(getPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(isRoot()).perform(waitDisplayed(R.id.authorization_image_button, 3000));
+        authorizationSteps.waitForAuthorizationButton();
         mainSteps.showTitleNewsOnMain();
         authorizationSteps.clickButtonExit();
         authorizationSteps.clickButtonLogOut();
@@ -105,9 +105,7 @@ public class AuthorizationTest {
         authorizationSteps.fillLoginField(getUnregisteredLogin());
         authorizationSteps.fillPasswordField(getUnregisteredPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }
 
     //  AC - 9 - Поле "Пароль" (Password) заполнено данными незарегистрированного пользователя, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -115,28 +113,24 @@ public class AuthorizationTest {
     @Story("TC - 8")
     @Description("Поле \"Пароль\" (Password) заполнено данными незарегистрированного пользователя, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void validLoginWithUnregisteredPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getLogin());
         authorizationSteps.fillPasswordField(getUnregisteredPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }
     //  AC - 10 -  Поле "Логин" (Login) заполнено данными незарегистрированного пользователя, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
     @Test
     @Story("AC - 10")
     @Description("Поле \"Логин\" (Login) заполнено данными незарегистрированного пользователя, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void unregisteredLoginWithValidPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getUnregisteredLogin());
         authorizationSteps.fillPasswordField(getPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }
 
     //  AC - 11 - Поле "Логин" (Login) пустое, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -144,14 +138,12 @@ public class AuthorizationTest {
     @Story("AC - 11")
     @Description("Поле \"Логин\" (Login) пустое, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void emptyLoginWithValidPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getEmptyField());
         authorizationSteps.fillPasswordField(getPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Login and password cannot be empty"))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForEmptyLoginOrPasswordError(decorView);
     }
  
     //  AC - 12 - Поле "Пароль" (Password) пустое, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -159,14 +151,12 @@ public class AuthorizationTest {
     @Story("AC - 12")
     @Description("Поле \"Пароль\" (Password) пустое, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void validLoginWithEmptyPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getLogin());
         authorizationSteps.fillPasswordField(getEmptyField());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Login and password cannot be empty"))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForEmptyLoginOrPasswordError(decorView);
     }
 
     //  AC - 13 -Поле  "Логин" (Login) и "Пароль" (Password) пустое, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -174,14 +164,12 @@ public class AuthorizationTest {
         @Story("TC - 7")
         @Description("Поле \"Пароль\" (Password) пустое, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
         public void bothFieldsEmpty() {
-            onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+            authorizationSteps.waitingAuthorizationPageAndLoginLayout();
             authorizationSteps.textAuthorization();
             authorizationSteps.fillLoginField(getEmptyField());
             authorizationSteps.fillPasswordField(getEmptyField());
             authorizationSteps.clickButtonSignIn();
-            onView(withText("Login and password cannot be empty"))
-                    .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                    .check(matches(isDisplayed()));
+            authorizationSteps.waitForEmptyLoginOrPasswordError(decorView);
     }
 
     // AC - 14 Поле "Логин" (Login) состоит из одного символа, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -189,14 +177,12 @@ public class AuthorizationTest {
     @Story("AC - 14")
     @Description("Поле \"Логин\" (Login) состоит из одного символа, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void singleCharacterLoginWithValidPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getOneLetterLogin());
         authorizationSteps.fillPasswordField(getPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }
 
     // AC - 15  Поле "Пароль" (Password) состоит из одного символа, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -204,14 +190,12 @@ public class AuthorizationTest {
     @Story("AC - 15")
     @Description("Поле \"Пароль\" (Password)  состоит из одного символа, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void validLoginWithSingleCharacterPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getLogin());
         authorizationSteps.fillPasswordField(getOneLetterPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }    
 
     //  AC - 16 - Поле "Логин" (Login) состоит из спецсимволов, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
@@ -219,27 +203,23 @@ public class AuthorizationTest {
     @Story("AC - 16")
     @Description("Поле \"Логин\" (Login) состоит из спецсимволов, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void loginWithSpecialCharactersWithValidPassword() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getLoginWithSpecialCharacters());
         authorizationSteps.fillPasswordField(getPassword());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }
         //  AC - 17 - Поле "Пароль" (Password) состоит из спецсимволов, при авторизации, в мобильном приложении "Мобильный хоспис" (Негативный).
     @Test
     @Story("AC - 17")
     @Description("Поле \"Пароль\" (Password) состоит из спецсимволов, при авторизации, в мобильном приложении \"Мобильный хоспис\" (Негативный).")
     public void validLoginWithPasswordWithSpecialCharacters() {
-        onView(isRoot()).perform(waitDisplayed(authorizationSteps.getLoginLayout(), 5000));
+        authorizationSteps.waitingAuthorizationPageAndLoginLayout();
         authorizationSteps.textAuthorization();
         authorizationSteps.fillLoginField(getLogin());
         authorizationSteps.fillPasswordField(getPasswordWithSpecialCharacters());
         authorizationSteps.clickButtonSignIn();
-        onView(withText("Something went wrong. Try again later."))
-                .inRoot(withDecorView(Matchers.not(decorView)))// Here you use decorView
-                .check(matches(isDisplayed()));
+        authorizationSteps.waitForSomethingWentWrong(decorView);
     }
 }

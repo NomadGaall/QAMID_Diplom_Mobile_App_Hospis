@@ -64,7 +64,7 @@ public class AboutTest {
     @Story("AP - 1 ")
     @Description("Корректность отображения всех элементов экрана (About)\"О приложении\" (About) мобильного приложения \"Мобильный хоспис\" (Позитивный)")
     public void shouldBeFullContentInAboutBlock() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         aboutSteps.clickButtonAboutMainMenu();
         aboutSteps.checkThatAboutBlockContentIsFull();
@@ -76,7 +76,7 @@ public class AboutTest {
     @Story("AP - 2 ")
     @Description("Просмотр ссылки \"Политика конфиденциальности\" (Privacy policy) во вкладке \"О приложении\" (About) мобильного приложения \"Мобильный хоспис\" (Позитивный)")
     public void watchingPrivacyPolicy() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         aboutSteps.clickButtonAboutMainMenu();
         aboutSteps.clickButtonPrivacyPolicy();
@@ -89,7 +89,7 @@ public class AboutTest {
     @Story("AP - 3")
     @Description("Просмотр ссылки \"Пользовательское соглашение\"  (Terms of use) во вкладке \"О приложении\" (About) мобильного приложения \"Мобильный хоспис\" (Позитивный).")
     public void watchingTermsOfUse() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         aboutSteps.clickButtonAboutMainMenu();
         aboutSteps.clickButtonTermsOfUse();

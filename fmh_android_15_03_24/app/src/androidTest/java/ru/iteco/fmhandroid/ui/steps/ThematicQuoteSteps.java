@@ -1,12 +1,18 @@
 package ru.iteco.fmhandroid.ui.steps;
 
+import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static ru.iteco.fmhandroid.ui.data.DataHelper.withIndex;
+import static ru.iteco.fmhandroid.ui.data.DataHelper.waitDisplayed;
 
 import io.qameta.allure.kotlin.Allure;
+import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.elements.ThematicQuotePage;
 
 public class ThematicQuoteSteps {
@@ -37,8 +43,14 @@ public class ThematicQuoteSteps {
         thematicQuotePage.getQuoteElementButtonToExpandThematicQuote
                 .perform(click());
     }
-
-    public int getMissionImageButton() {
+    public void waitingMissionImageButtonAndThemePage() {
+        Allure.step("Ожидание  отображение кнопки и начальной страницы  ");
+        onView(isRoot()).perform(waitDisplayed(getMissionImageButton(), 5000));
+    }
+    public void verifyItemDescriptionDisplayed(int index) {
+        thematicQuotePage.getItemDescriptionTextView.check(matches(isDisplayed()));
+    }
+        public int getMissionImageButton() {
         return thematicQuotePage.missionImageButton;
     }
 }

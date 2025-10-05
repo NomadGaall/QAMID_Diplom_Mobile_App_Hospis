@@ -73,10 +73,10 @@ public class MainTest {
     @Story("MP - 2")
     @Description("Свернуть/развернуть вкладку \"Новости\" (News)  на  вкладке \"Главная страница\" (Main) мобильного приложения \"Мобильный хоспис\" (Позитивный).")
     public void extendNews() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getButtonToExpandNews(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonToExpandNews();
         mainSteps.clickButtonToExpandNews();
-        onView(withId(R.id.all_news_text_view)).check(matches(withText("ALL NEWS")));
+        mainSteps.DisplayingAllNews();
     }
 
 
@@ -85,20 +85,20 @@ public class MainTest {
     @Story("MP - 3")
     @Description("Переход на вкладку \"Главная страница\" (Main) через главное меню мобильного приложения \"Мобильный хоспис\" (Позитивный).")
     public void Main() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getMainMenuButton(), 5000));
+        mainSteps.waitingForMaiMenbToLoad();
         mainSteps.clickButtonMainMenu();
         newsSteps.clickButtonNews();
-        onView(withText("News")).check(matches(isDisplayed()));
+        mainSteps.waitingTextNews();
         mainSteps.clickButtonMainMenu();
         mainSteps.clickButtonMain();
-        onView(withText("News")).check(matches(isDisplayed()));
+        mainSteps.waitingTextNews();
     }
     //   MP - 4 - Переход на вкладку "Главная страница" (Main) через главное меню мобильного приложения "Мобильный хоспис"(Позитивный).
     @Test
     @Story("MP - 4")
     @Description("развернуть/Свернуть новость  \"Главной странице\" (Main) новость  \"Мобильный хоспис\" (Позитивный).")
     public void ExpandNewsOnTheMainPage() {
-        onView(isRoot()).perform(waitDisplayed(mainSteps.getButtonToExpandNews(), 5000));
+        mainSteps.DisplayingGetButtonToExpandNews();
         int positionNews = 1;
         newsSteps.openNewsOnNewsPage(positionNews);
         newsSteps.getNewsItemDescription(positionNews).check(matches(isDisplayed()));
